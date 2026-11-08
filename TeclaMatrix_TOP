@@ -1,0 +1,159 @@
+--*********************************************************************
+--***************************  Encabezado  ****************************
+--*********************************************************************
+
+-- * Número del ejemplo:2-15
+-- * Nombre del ejemplo:Teclado matricial
+-- * Autor(es)         :Ignacio Rangel Fuerte
+-- * Asignatura        :Circuitos Digitales
+-- * Tema              :Cartas ASM
+-- * Subtema           :Control de dispositivos digitales
+-- * Grupo             :GG
+-- * Semestre          :xxxx-x
+-- * Fecha de entrega  :dd/mm/aaaa
+
+-- * Descripción:
+--   Diseñar un MEF basada en cartas ASM que decodifique las 16 teclas 
+--   de un teclado matricial y las muestre en un display de 7 segmentos.
+--   En estado de reposo, el display muestra un guión medio. 
+--   Además, con un pulsador se manda el display a estado de reposo.
+
+--Divisor de frecuencia:
+--fdes = 100[Hz]
+--N_on = fosc/(2*fdes) = 27000000[Hz]/(2*100[Hz]) = 135000
+
+-- * Dispositivo lógico programable
+--    - Tipo de PLD                 :FPGA 
+--    - Matrícula del dispositivo   :GW1NZ-LV1
+--    - Tarjeta de desarrollo       :Tang Nano 1k
+
+-- * Notas:
+--    - Salidas :   [C4 C3 C2 C1] -> [24 10 9 11]
+--                [a b c d e f g] -> [34 34 20 19 29 30 31]
+--    - Entradas:       [RST OSC] -> [44 47]
+--                  [R4 R3 R2 R1] -> [16 15 27 28]
+
+--********************************************************************
+--*****************************  Código  *****************************
+--********************************************************************
+
+--********************** Bibliotecas a utilizar **********************
+library ieee;
+use ieee.std_logic_1164.all;	  
+use ieee.numeric_std.all;
+
+--====================================================================
+
+--***************************** Entidad ******************************
+entity TOP_teclado_4x3 is
+    port(	
+        --Entradas
+		rst_TOP,osc	: in std_logic;
+        clr_TOP     : in std_logic;
+		R_TOP	    : in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
+
+		--Salidas 
+		I_TOP : out std_logic_vector(1 downto 0); --[Deco de columnas]
+        BCD_TOP : out std_logic_vector(3 downto 0); --[DEC 7s]
+        BI_TOP  : out std_logic  --[BI del DEC 7s]
+    ); 
+end TOP_teclado_4x3;
+
+--====================================================================
+
+--*************************** Arquitectura ***************************
+architecture CSS of TOP_teclado_4x3 is
+
+--Señales TOP
+signal tecla_TOP,N_TOP: std_logic_vector(3 downto 0);
+signal clk_TOP,rep_TOP,LD_TOP,BI_TOP_INT: std_logic;
+signal I_TOP_INT : std_logic_vector(1 downto 0);
+
+
+--Bloque de divisor de frecuencia
+component divisorFrec is 
+    generic(        
+        N_on: natural := 6750000 
+    );
+    port(   --Entradas
+            reset,clk_in : in std_logic;
+
+            --Salidas
+            clk_out : out std_logic := '0' );
+end component divisorFrec;
+
+--Bloque de carta ASM
+component ASM_teclado_4x3 is
+    port(	
+        --Entradas
+		rst,clk	: in std_logic;
+        clr: in std_logic;
+		R	: in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
+
+		--Salidas
+        rep,LD : out std_logic;
+		tecla  : out std_logic_vector(3 downto 0); --Digito de tecla
+		I      : out std_logic_vector(1 downto 0) --[C1,C2,C3]
+    ); 
+end component ASM_teclado_4x3;
+
+--Bloque de registro PIPO
+component reg_pp is
+    generic(
+        m: natural := 4);
+
+    port(	
+        --Entradas
+        rst,clk : in std_logic;
+        W,EN : in std_logic;
+        D	  : in std_logic_vector(m-1 downto 0);
+        --Salidas                              
+        Q : out std_logic_vector(m-1 downto 0):= (others => '0')
+    );
+end component reg_pp;
+
+begin
+--========================== Divisor de frecuencia ==========================
+    Divisor: divisorFrec
+        generic map(N_on => 27000000/(2*100))
+        port map(
+            reset   => rst_TOP,
+            clk_in  => osc,
+            clk_out => clk_TOP
+        );
+-----------------------------------------------------------------------------
+
+--=================================== ASM ===================================
+    ASM: ASM_teclado_4x3 port map(
+		rst   => rst_TOP,
+        clk   => clk_TOP, 
+		clr   => clr_TOP,
+		R     => R_TOP,
+		rep   => rep_TOP,
+		LD    => LD_TOP,
+		tecla => tecla_TOP,
+		I     => I_TOP
+    );
+-----------------------------------------------------------------------------
+
+--=============================== Registro PP ===============================
+    Reg: reg_pp 
+        generic map(m => 5)
+        port map(
+            rst => rst_TOP,
+            clk => clk_TOP, 
+            W   => LD_TOP,
+            EN  => '1',
+            D(4) => rep_TOP,
+            D(3 downto 0) => tecla_TOP,
+            Q(4)   => BI_TOP_INT,
+            Q(3 downto 0) => N_TOP
+        );
+-----------------------------------------------------------------------------
+    
+    BCD_TOP <= N_TOP;
+    BI_TOP  <= BI_TOP_INT;
+
+end CSS;
+
+--====================================================================
