@@ -46,7 +46,7 @@ entity controladorMotorTiempo is
         RENGLONES: in std_logic_vector(3 downto 0);
 
         --Salidas
-        COLUMNAS: out std_logic_vector(3 downto 0);
+        COLUMNAS: out std_logic_vector(2 downto 0);
         DISPLAY1, DISPLAY2: out std_logic_vector(3 downto 0);
         MOTOR: out std_logic
     );
@@ -60,7 +60,7 @@ architecture estructura of controladorMotorTiempo is
 signal clkGen: std_logic;
 --Teclado
 signal BI: std_logic;
-signal numSel: std_logic_vector(3 downto 0);
+signal numSel, columnasS: std_logic_vector(3 downto 0);
 signal dirCol: std_logic_vector(1 downto 0);
 --Tiempo
 signal inicioMotor, apagarMotor: std_logic;
@@ -170,10 +170,11 @@ begin
         EN => '0',
   
         --Salidas
-        m => COLUMNAS
+        m => columnasS
     );
 
     DISPLAY1 <= numSel;
+    COLUMNAS <= columnasS(2 downto 0);
 
     --Control del tiempo
     contolTiempo: ControladorTiempo
