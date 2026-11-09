@@ -56,7 +56,6 @@ entity Motor_TOP is
         --Salidas
         M_TOP: out std_logic
     );
-
 end Motor_TOP;
 
 --====================================================================
@@ -69,22 +68,22 @@ signal clk_TOP: std_logic;
 signal pA_TOP, pP_TOP : std_logic;
 
 --Bloque para Divisor de frecuencia
-component divisorFrec is 
+component divFrec is 
     generic(        
         N_on: natural := 6750000 
     );
     port(   --Entradas
-            reset,clk_in : in std_logic;
+            rst,clk_in : in std_logic;
 
             --Salidas
             clk_out : out std_logic := '0' );
-end component divisorFrec;
+end component divFrec;
 
 --Bloque para cartas ASM de Pulsos únicos de botones A y P
 component pulso_unico is
 	port(	
         --Entradas
-		rst,clk : in std_logic;
+		rst_TOP,osc : in std_logic;
 		pb	  : in std_logic;
 		--Salidas 
 		ppb	: out std_logic );
@@ -105,19 +104,19 @@ end component Motor;
 begin
 
 --========================== Divisor de frecuencia ==========================
-    Divisor: divisorFrec
+    Divisor: divFrec
         generic map(N_on => 27000000/(2*5))
         port map(
-            reset   => rst_TOP,
+            rst   => rst_TOP,
             clk_in  => osc,
             clk_out => clk_TOP
         );
 -----------------------------------------------------------------------------
 
---===================== ASM 1 (pulso único de botón Arramque) =====================
+--===================== ASM 1 (pulso único de botón Arranque) =====================
     pu_A: pulso_unico port map(
-		rst => rst_TOP,
-        clk => clk_TOP, 
+		rst_TOP => rst_TOP,
+        osc => clk_TOP, 
 		pb  => A_TOP,
 		ppb => pA_TOP
     );
@@ -125,8 +124,8 @@ begin
 
 --=================== ASM 2 (pulso único de botón de PARO) ==================
     pu_P: pulso_unico port map(
-		rst => rst_TOP,
-        clk => clk_TOP, 
+		rst_TOP => rst_TOP,
+        osc => clk_TOP, 
 		pb  => P_TOP,
 		ppb => pP_TOP
     );

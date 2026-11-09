@@ -10,7 +10,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 --====================================================================
---***************************** Entidad ******************************
+--********************  ********* Entidad ******************************
 entity Motor is
     port(
         --Entradas
@@ -29,8 +29,6 @@ architecture ASM of Motor is
 
 type estados is (S0,S1);
 signal edo_pte,edo_sig : estados;
-signal RST_Cont : std_logic;
-signal Cont_fin : std_logic;
 
 begin
 --************************** Elementos de memoria ***************************
@@ -42,12 +40,11 @@ begin
 	end process memoria;
 
 --*********************************** CLC ***********************************
-    clc: process(edo_pte,P,A,rst,Cont_fin,RST_Cont)	
+    clc: process(edo_pte,P,A,rst)	
 	begin
-                RST_Cont <= '0';
 		case edo_pte is	
 			when S0 => 	
-                M <= '0';                
+                M <= '0';
                 if(A = '1') then 
                     edo_sig <= S1;
                 else edo_sig <= S0;
@@ -55,10 +52,8 @@ begin
 
 			when S1 =>
                 M <= '1';
-                if(P = '1') then 
-                    RST_Cont <= '1'; -- Retroalimentación con controlador 2
-                    edo_sig <= S0;                
-                elsif(Cont_fin = '1') then edo_sig <= S0;
+                if(P = '1') then
+                    edo_sig <= S0;
                 else edo_sig <= S1;
                 end if;
 		end case;

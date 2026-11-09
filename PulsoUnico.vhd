@@ -57,40 +57,16 @@ end pulso_unico;
 architecture ASM of pulso_unico is
 
 --Señales para carta ASM
-signal clk_TOP: std_logic := '0';
 type estados is (s0,s1);
 signal edo_pte,edo_sig : estados;
 
---Bloque divisor de frecuencia
-component divisorFrec is 
-    generic(        
-        N_on: natural := 6750000
-    );
-    port(   
-        --Entradas
-        reset,clk_in : in std_logic;
-
-        --Salidas
-        clk_out : out std_logic := '0' );
-end component divisorFrec;
-
 begin
---========================== Divisor de frecuencia ==========================
-    DivFrec: divisorFrec 
-        generic map(N_on => 27000000/(2 * 2))
-        port map(
-            reset   => rst_TOP,
-            clk_in  => osc,
-            clk_out => clk_TOP
-        );
------------------------------------------------------------------------------
-
 --================================== ASM ====================================
 --************************** Elementos de memoria ***************************
-	memoria: process(clk_TOP,rst_TOP)	
+	memoria: process(osc,rst_TOP)	
 	begin				
 		if(rst_TOP = '0') then edo_pte <= s0;
-		elsif(rising_edge(clk_TOP)) then edo_pte <= edo_sig;
+		elsif(rising_edge(osc)) then edo_pte <= edo_sig;
 		end if;
 	end process memoria;
 

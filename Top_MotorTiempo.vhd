@@ -48,7 +48,7 @@ entity controladorMotorTiempo is
         --Salidas
         COLUMNAS: out std_logic_vector(3 downto 0);
         DISPLAY1, DISPLAY2: out std_logic_vector(3 downto 0);
-        MOTOR: out std_logic_vector(1 downto 0)
+        MOTOR: out std_logic
     );
 end controladorMotorTiempo;
 --====================================================================
@@ -57,12 +57,15 @@ end controladorMotorTiempo;
 architecture estructura of controladorMotorTiempo is
 
 --**********Inicio de las señales**********
+--Teclado
 signal BI: std_logic;
 signal numSel: std_logic_vector(3 downto 0);
 signal dirCol: std_logic_vector(1 downto 0);
-
+--Tiempo
 signal inicioMotor, apagarMotor: std_logic;
 signal finTiempo: std_logic;
+--Motor
+signal arranqueS, paroS: std_logic;
 --==========Fin de las señales==========
 
 --**********Inicio de los componentes**********
@@ -109,6 +112,17 @@ component ControladorTiempo is
         DISPLAY2 : out std_logic_vector(3 downto 0)
     );
 end component ControladorTiempo;
+
+component Motor_TOP is
+    port(
+        --Entradas
+        rst_TOP,osc: in std_logic;
+        A_TOP,P_TOP: in std_logic;
+
+        --Salidas
+        M_TOP: out std_logic
+    );
+end component Motor_TOP;
 --==========Fin de los componentes==========
 
 --**********Inicio de la estructura**********
@@ -158,6 +172,22 @@ begin
             APAGAR_MOTOR => apagarMotor,
 
             DISPLAY2 => DISPLAY2
+        );
+
+    --Control del motor
+    arranqueS <= ARRANQUE or inicioMotor;
+    paroS <= PARO_EMG or finTiempo or apagarMotor;
+
+    controlMotor: Motor_TOP
+        port map(
+            --Entradas
+            rst_TOP => RST_GEN,
+            osc => CLK,
+            A_TOP => arranqueS,
+            P_TOP => paroS,
+
+            --Salidas
+            M_TOP => MOTOR
         );
 end architecture;
 --==========Fin de la estructura==========
