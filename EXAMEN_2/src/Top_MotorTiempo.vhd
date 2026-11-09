@@ -57,6 +57,7 @@ end controladorMotorTiempo;
 architecture estructura of controladorMotorTiempo is
 
 --**********Inicio de las señales**********
+signal clkGen: std_logic;
 --Teclado
 signal BI: std_logic;
 signal numSel: std_logic_vector(3 downto 0);
@@ -69,12 +70,23 @@ signal arranqueS, paroS: std_logic;
 --==========Fin de las señales==========
 
 --**********Inicio de los componentes**********
+component divFrec is 
+    generic(		
+        N_on: natural := 27000000/(2 * 2) 
+    );
+    port(   --Entradas
+            rst,clk_in : in std_logic;
+
+            --Salidas
+            clk_out : out std_logic := '0' );
+end component divFrec;
+
 component TOP_teclado_4x3 is
     port(
         --Entradas
-		rst_TOP,osc	: in std_logic;
-        clr_TOP     : in std_logic;
-		R_TOP	    : in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
+		rst_TOP,clk_TOP : in std_logic;
+        clr_TOP         : in std_logic;
+		R_TOP	        : in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
 
 		--Salidas 
 		I_TOP : out std_logic_vector(1 downto 0); --[Deco de columnas]
@@ -116,7 +128,7 @@ end component ControladorTiempo;
 component Motor_TOP is
     port(
         --Entradas
-        rst_TOP,osc: in std_logic;
+        rst_TOP,clk_TOP: in std_logic;
         A_TOP,P_TOP: in std_logic;
 
         --Salidas
@@ -127,12 +139,21 @@ end component Motor_TOP;
 
 --**********Inicio de la estructura**********
 begin
+    --Reloj general del circuito
+    Divisor: divFrec
+        generic map(N_on => 27000000/(2*120))
+        port map(
+            rst   => RST_GEN,
+            clk_in  => CLK,
+            clk_out => clkGen
+        );
+
     --Teclado
     teclado: TOP_teclado_4x3
     port map(
         --Entradas
 		rst_TOP => RST_GEN,
-        osc	=> CLK,
+        clk_TOP	=> clkGen,
         clr_TOP => '1',
 		R_TOP => RENGLONES,
 
@@ -175,14 +196,14 @@ begin
         );
 
     --Control del motor
-    arranqueS <= ARRANQUE or inicioMotor;
-    paroS <= PARO_EMG or finTiempo or apagarMotor;
+    arranqueS <= ARRANQUE or (not inicioMotor);
+    paroS <= PARO_EMG or (not finTiempo) or (not apagarMotor);
 
     controlMotor: Motor_TOP
         port map(
             --Entradas
             rst_TOP => RST_GEN,
-            osc => CLK,
+            clk_TOP => clkGen,
             A_TOP => arranqueS,
             P_TOP => paroS,
 
