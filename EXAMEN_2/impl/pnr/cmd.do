@@ -1,0 +1,17 @@
+-d C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\impl\gwsynthesis\EXAMEN_2.vg
+-p GW1NZ-1-QFN48-6
+-pn GW1NZ-LV1QN48C6/I5
+-cst C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\EXAMEN_2.cst
+-cfg C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\impl\pnr\device.cfg
+-bit
+-tr
+-ph
+-timing
+-cst_error
+-convert_sdp32_36_to_sdp16_18
+-place_option 0
+-route_option 0
+-clock_route_order 0
+-correct_hold 1
+-route_maxfan 10
+-global_freq 50.000

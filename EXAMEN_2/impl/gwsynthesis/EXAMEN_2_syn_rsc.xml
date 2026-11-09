@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="controladorMotorTiempo" T_Register="76(0)" T_Lut="155(0)">
+ <SubModule name="teclado" T_Register="25(0)" T_Lut="43(0)">
+  <SubModule name="Divisor" Register="19" Lut="32" T_Register="19(19)" T_Lut="32(32)"/>
+  <SubModule name="ASM" Register="2" Lut="11" T_Register="2(2)" T_Lut="11(11)"/>
+  <SubModule name="Reg" Register="4" T_Register="4(4)"/>
+ </SubModule>
+ <SubModule name="decRenglones" Lut="4" T_Lut="4(4)"/>
+ <SubModule name="contolTiempo" Register="3" Lut="7" T_Register="30(3)" T_Lut="61(7)">
+  <SubModule name="U1" Register="23" Lut="40" T_Register="23(23)" T_Lut="40(40)"/>
+  <SubModule name="U2" Register="4" Lut="14" T_Register="4(4)" T_Lut="14(14)"/>
+ </SubModule>
+ <SubModule name="controlMotor" T_Register="21(0)" T_Lut="47(0)">
+  <SubModule name="Divisor" Register="18" Lut="42" T_Register="18(18)" T_Lut="42(42)"/>
+  <SubModule name="pu_A" Register="1" Lut="2" T_Register="1(1)" T_Lut="2(2)"/>
+  <SubModule name="pu_P" Register="1" Lut="1" T_Register="1(1)" T_Lut="1(1)"/>
+  <SubModule name="ASM_motor" Register="1" Lut="2" T_Register="1(1)" T_Lut="2(2)"/>
+ </SubModule>
+</Module>

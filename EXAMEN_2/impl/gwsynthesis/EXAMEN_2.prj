@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gowin-synthesis-project>
+<Project>
+    <Version>beta</Version>
+    <Device id="GW1NZ-1" package="QFN48" speed="6" partNumber="GW1NZ-LV1QN48C6/I5"/>
+    <FileList>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\ContadorBCD.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\ControladorTiempo.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\divisorFrec.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\DivFrec_II_v2.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\Top_MotorTiempo.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\Dec2x4.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\TeclaMatrix_TOP.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\TeclaMatrix_RegPIPO.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\TeclaMatrix_ASM.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\TOP_Motor.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\PulsoUnico.vhd" type="vhdl"/>
+        <File path="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\src\ASM_Motor.vhd" type="vhdl"/>
+    </FileList>
+    <OptionList>
+        <Option type="disable_insert_pad" value="0"/>
+        <Option type="global_freq" value="50.000"/>
+        <Option type="looplimit" value="2000"/>
+        <Option type="output_file" value="C:\Users\mauyidos\Desktop\Miau l\Escuela l\Semestre 7\Circuitos digitales\Examen 2\EXAMEN_2\impl\gwsynthesis\EXAMEN_2.vg"/>
+        <Option type="print_all_synthesis_warning" value="0"/>
+        <Option type="ram_rw_check" value="0"/>
+        <Option type="vcc" value="1.2"/>
+        <Option type="verilog_language" value="verilog-2001"/>
+        <Option type="vhdl_language" value="vhdl-1993"/>
+    </OptionList>
+</Project>

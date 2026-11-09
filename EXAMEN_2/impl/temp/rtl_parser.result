@@ -1,0 +1,122 @@
+[
+ {
+  "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+  "InstLine" : 41,
+  "InstName" : "controladorMotorTiempo",
+  "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+  "ModuleLine" : 41,
+  "ModuleName" : "controladorMotorTiempo",
+  "SubInsts" : [
+   {
+    "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+    "InstLine" : 131,
+    "InstName" : "teclado",
+    "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_TOP.vhd",
+    "ModuleLine" : 48,
+    "ModuleName" : "TOP_teclado_4x3",
+    "SubInsts" : [
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_TOP.vhd",
+      "InstLine" : 117,
+      "InstName" : "Divisor",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/DivFrec_II_v2.vhd",
+      "ModuleLine" : 36,
+      "ModuleName" : "divFrec"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_TOP.vhd",
+      "InstLine" : 127,
+      "InstName" : "ASM",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_ASM.vhd",
+      "ModuleLine" : 17,
+      "ModuleName" : "ASM_teclado_4x3"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_TOP.vhd",
+      "InstLine" : 140,
+      "InstName" : "Reg",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TeclaMatrix_RegPIPO.vhd",
+      "ModuleLine" : 16,
+      "ModuleName" : "reg_pp"
+     }
+    ]
+   },
+   {
+    "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+    "InstLine" : 145,
+    "InstName" : "decRenglones",
+    "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Dec2x4.vhd",
+    "ModuleLine" : 16,
+    "ModuleName" : "Dec2x4"
+   },
+   {
+    "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+    "InstLine" : 158,
+    "InstName" : "contolTiempo",
+    "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/ControladorTiempo.vhd",
+    "ModuleLine" : 41,
+    "ModuleName" : "ControladorTiempo",
+    "SubInsts" : [
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/ControladorTiempo.vhd",
+      "InstLine" : 121,
+      "InstName" : "U1",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/divisorFrec.vhd",
+      "ModuleLine" : 32,
+      "ModuleName" : "divisorFrec"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/ControladorTiempo.vhd",
+      "InstLine" : 132,
+      "InstName" : "U2",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/ContadorBCD.vhd",
+      "ModuleLine" : 34,
+      "ModuleName" : "ContadorBCD"
+     }
+    ]
+   },
+   {
+    "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/Top_MotorTiempo.vhd",
+    "InstLine" : 181,
+    "InstName" : "controlMotor",
+    "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TOP_Motor.vhd",
+    "ModuleLine" : 50,
+    "ModuleName" : "Motor_TOP",
+    "SubInsts" : [
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TOP_Motor.vhd",
+      "InstLine" : 107,
+      "InstName" : "Divisor",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/DivFrec_II_v2.vhd",
+      "ModuleLine" : 36,
+      "ModuleName" : "divFrec"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TOP_Motor.vhd",
+      "InstLine" : 117,
+      "InstName" : "pu_A",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/PulsoUnico.vhd",
+      "ModuleLine" : 44,
+      "ModuleName" : "pulso_unico"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TOP_Motor.vhd",
+      "InstLine" : 126,
+      "InstName" : "pu_P",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/PulsoUnico.vhd",
+      "ModuleLine" : 44,
+      "ModuleName" : "pulso_unico"
+     },
+     {
+      "InstFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/TOP_Motor.vhd",
+      "InstLine" : 135,
+      "InstName" : "ASM_motor",
+      "ModuleFile" : "C:/Users/mauyidos/Desktop/Miau l/Escuela l/Semestre 7/Circuitos digitales/Examen 2/EXAMEN_2/src/ASM_Motor.vhd",
+      "ModuleLine" : 14,
+      "ModuleName" : "Motor"
+     }
+    ]
+   }
+  ]
+ }
+]

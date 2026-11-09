@@ -1,0 +1,27 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW1NZ-1" pn="GW1NZ-LV1QN48C6/I5">gw1nz1-015</Device>
+    <FileList>
+        <File path="src/ASM_Motor.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/ContadorBCD.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/ControladorTiempo.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/Dec2x4.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/DecBCD.vhd" type="file.vhdl" enable="0"/>
+        <File path="src/DivFrec_II_v2.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/Mux2x1_v2.vhd" type="file.vhdl" enable="0"/>
+        <File path="src/PruebaControladorTiempo.vhd" type="file.vhdl" enable="0"/>
+        <File path="src/PulsoUnico.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/Pulso_Unico.vhd" type="file.vhdl" enable="0"/>
+        <File path="src/TOP_Motor.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/TeclaMatrix_ASM.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/TeclaMatrix_RegPIPO.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/TeclaMatrix_TOP.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/Top_MotorTiempo.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/Top_MotorTiempo_Temp.vhd" type="file.vhdl" enable="0"/>
+        <File path="src/divisorFrec.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/ControladorMotorTiempo.cst" type="file.cst" enable="1"/>
+    </FileList>
+</Project>
