@@ -48,7 +48,7 @@ use ieee.numeric_std.all;
 entity TOP_teclado_4x3 is
     port(	
         --Entradas
-		rst_TOP,osc	: in std_logic;
+		rst_TOP,clk_TOP	: in std_logic;
         clr_TOP     : in std_logic;
 		R_TOP	    : in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
 
@@ -66,21 +66,8 @@ architecture CSS of TOP_teclado_4x3 is
 
 --Señales TOP
 signal tecla_TOP,N_TOP: std_logic_vector(3 downto 0);
-signal clk_TOP,rep_TOP,LD_TOP,BI_TOP_INT: std_logic;
+signal rep_TOP,LD_TOP,BI_TOP_INT: std_logic;
 signal I_TOP_INT : std_logic_vector(1 downto 0);
-
-
---Bloque de divisor de frecuencia
-component divFrec is 
-    generic(        
-        N_on: natural := 6750000 
-    );
-    port(   --Entradas
-            rst,clk_in : in std_logic;
-
-            --Salidas
-            clk_out : out std_logic := '0' );
-end component divFrec;
 
 --Bloque de carta ASM
 component ASM_teclado_4x3 is
@@ -113,16 +100,6 @@ component reg_pp is
 end component reg_pp;
 
 begin
---========================== Divisor de frecuencia ==========================
-    Divisor: divFrec
-        generic map(N_on => 27000000/(2*100))
-        port map(
-            rst     => rst_TOP,
-            clk_in  => osc,
-            clk_out => clk_TOP
-        );
------------------------------------------------------------------------------
-
 --=================================== ASM ===================================
     ASM: ASM_teclado_4x3 port map(
 		rst   => rst_TOP,

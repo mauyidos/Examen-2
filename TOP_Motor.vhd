@@ -50,7 +50,7 @@ use ieee.numeric_std.all;
 entity Motor_TOP is
     port(
         --Entradas
-        rst_TOP,osc: in std_logic;
+        rst_TOP,clk_TOP: in std_logic;
         A_TOP,P_TOP: in std_logic;
 
         --Salidas
@@ -64,20 +64,7 @@ end Motor_TOP;
 architecture Estructura of Motor_TOP is
 
 --Señales TOP
-signal clk_TOP: std_logic;
 signal pA_TOP, pP_TOP : std_logic;
-
---Bloque para Divisor de frecuencia
-component divFrec is 
-    generic(        
-        N_on: natural := 6750000 
-    );
-    port(   --Entradas
-            rst,clk_in : in std_logic;
-
-            --Salidas
-            clk_out : out std_logic := '0' );
-end component divFrec;
 
 --Bloque para cartas ASM de Pulsos únicos de botones A y P
 component pulso_unico is
@@ -102,16 +89,6 @@ component Motor is
     );
 end component Motor;
 begin
-
---========================== Divisor de frecuencia ==========================
-    Divisor: divFrec
-        generic map(N_on => 27000000/(2*5))
-        port map(
-            rst   => rst_TOP,
-            clk_in  => osc,
-            clk_out => clk_TOP
-        );
------------------------------------------------------------------------------
 
 --===================== ASM 1 (pulso único de botón Arranque) =====================
     pu_A: pulso_unico port map(

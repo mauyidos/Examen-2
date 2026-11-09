@@ -132,7 +132,7 @@ begin
     U2: ContadorBCD
         port map(
             RST_GEN => RST_GEN,
-            CLK => PULSO_1S,
+            CLK => CLK,
 
             CLR => clr_cont,
             LD => ld_cont,
@@ -249,21 +249,19 @@ begin
 
         -- Valores iniciales de las señales de control
 
-        ld_cont <= '0';
-        clr_cont <= '0';
-        en_cont <= '0';
-
-        INICIO_MOTOR <= '0';
-        FIN_TIEMPO <= '0';
-        APAGAR_MOTOR <= '0';
-
         case edo_pte is
 
             -- Estado REPOSO
 
             when REPOSO =>
 
-                null;
+                ld_cont <= '0';
+                clr_cont <= '0';
+                en_cont <= '0';
+
+                INICIO_MOTOR <= '0';
+                FIN_TIEMPO <= '0';
+                APAGAR_MOTOR <= '1';
 
             -- Estado CARGA
 
@@ -283,11 +281,16 @@ begin
 
                 en_cont <= '1';
 
+                INICIO_MOTOR <= '1';
+                APAGAR_MOTOR <= '0';
+
             -- Estado FIN
 
             when FIN =>
 
+                INICIO_MOTOR <= '0';
                 FIN_TIEMPO <= '1';
+                APAGAR_MOTOR <= '1';
 
             -- Estado EMERGENCIA
 
