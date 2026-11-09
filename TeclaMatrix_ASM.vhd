@@ -1,0 +1,163 @@
+--Carta ASM que decodifica las 16 teclas de un teclado matricial.
+--En estado de reposo, el display muestra un guión 
+--medio. Además, con un pulsador se manda el display a estado de reposo.
+
+--********************************************************************
+--*****************************  Código  *****************************
+--********************************************************************
+
+--********************** Bibliotecas a utilizar **********************
+library ieee;
+use ieee.std_logic_1164.all;	  
+use ieee.numeric_std.all;
+
+--====================================================================
+
+--***************************** Entidad ******************************
+entity ASM_teclado_4x3 is
+    port(	
+        --Entradas
+		rst,clk	: in std_logic;
+        clr: in std_logic;
+		R	: in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
+
+		--Salidas
+        rep,LD : out std_logic;
+		tecla  : out std_logic_vector(3 downto 0); --Digito de tecla
+		I      : out std_logic_vector(1 downto 0) --[C1,C2,C3]
+    ); 
+end ASM_teclado_4x3;
+
+--====================================================================
+
+--*************************** Arquitectura ***************************
+architecture ASM of ASM_teclado_4x3 is
+
+type estados is (s0,s1,s2);
+signal edo_pte,edo_sig : estados;
+signal entASM: std_logic_vector(4 downto 0);
+
+begin
+
+--********************** Elementos de memoria ************************
+    memoria: process(clk,rst)
+        begin	
+            if(rst = '0') then edo_pte <= s0;	
+            elsif(rising_edge(clk)) then edo_pte <= edo_sig;
+		end if;
+	end process memoria;
+
+--******************************* CLC ********************************
+entASM <= clr & R;
+clc: process(edo_pte,entASM)
+	begin
+		case edo_pte is
+			when s0 =>
+				I <= "00"; --entASM = [clr R4 R3 R2 R1]
+				if(entASM = "01111") then
+					edo_sig <= s1;
+					tecla <= "0000";
+                    LD <= '1';
+                    rep <= '0';
+            -- El barrido va de derecha a izquierda
+				elsif(entASM = "11110") then
+					edo_sig <= s1;
+					tecla <= "0001"; -- 1
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11101") then
+					edo_sig <= s1;
+					tecla <= "0100";  -- 4
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11011") then
+					edo_sig <= s1;
+					tecla <= "0111";  -- 7
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "10111") then
+					edo_sig <= s1;
+					tecla <= "0000";  -- *
+                    LD <= '0';
+                    rep <= '0';
+				else 
+					edo_sig <= s1;
+					tecla <= "0000";
+                    LD <= '0';
+                    rep <= '0';
+				end if;
+
+			when s1 =>
+				I <= "01";
+				if(entASM = "01111") then
+					edo_sig <= s2;
+					tecla <= "0000";  
+                    LD <= '1';
+                    rep <= '0';
+				elsif(entASM = "11110") then
+					edo_sig <= s2;
+					tecla <= "0010";  -- 2
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11101") then
+					edo_sig <= s2;
+					tecla <= "0101";  -- 5
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11011") then
+					edo_sig <= s2;
+					tecla <= "1000";  -- 8
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "10111") then
+					edo_sig <= s2;
+					tecla <= "0000";  -- 0
+                    LD <= '1';
+                    rep <= '1';
+				else 
+					edo_sig <= s2;
+					tecla <= "0000";
+                    LD <= '0';
+                    rep <= '0';
+				end if;
+
+			when s2 =>
+				I <= "10";
+				if(entASM = "01111") then
+					edo_sig <= s0;
+					tecla <= "0000"; 
+                    LD <= '1';
+                    rep <= '0';
+				elsif(entASM = "11110") then
+					edo_sig <= s0;
+					tecla <= "0011";  -- 3
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11101") then
+					edo_sig <= s0;
+					tecla <= "0110";  -- 6
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "11011") then
+					edo_sig <= s0;
+					tecla <= "1001";  -- 9
+                    LD <= '1';
+                    rep <= '1';
+				elsif(entASM = "10111") then
+					edo_sig <= s0;
+					tecla <= "0000";  -- #
+                    LD <= '0';
+                    rep <= '0';
+				else 
+					edo_sig <= s0;
+					tecla <= "0000";
+                    LD <= '0';
+                    rep <= '0';
+				end if;
+
+		end case;
+	end process clc;
+----------------------------------------------------------------------
+end ASM;
+
+--====================================================================

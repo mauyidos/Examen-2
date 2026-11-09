@@ -1,0 +1,48 @@
+--Descripción en VHDL de un registro EP/SP de cuatro 
+--bits e implementarlo en el FPGA.
+
+--********************************************************************
+--*****************************  Código  *****************************
+--********************************************************************
+
+--********************** Bibliotecas a utilizar **********************
+library ieee;
+use ieee.std_logic_1164.all;	  
+use ieee.numeric_std.all;
+
+--====================================================================
+
+--***************************** Entidad ******************************
+entity reg_pp is
+    generic(
+        m: natural := 4);
+
+    port(	
+        --Entradas
+        rst,clk : in std_logic;
+        W,EN : in std_logic;
+        D	  : in std_logic_vector(m-1 downto 0);
+        --Salidas                              
+        Q : out std_logic_vector(m-1 downto 0):= (others => '0')
+    );
+end reg_pp;
+
+--====================================================================
+
+--*************************** Arquitectura ***************************
+architecture comportamiento of reg_pp is
+signal Qreg: std_logic_vector(m-1 downto 0):= (others => '0');
+begin
+	process(D,W,rst,clk)
+		begin
+		  if(rst = '0') then Qreg <= (others => '0');
+	   	  elsif(rising_edge(clk)) then
+			if(W = '1') then Qreg <= D;
+            else Qreg <= Qreg;
+			end if;
+	   	  end if;
+	end process;
+    Q <= Qreg when EN = '1' else (others => 'Z');
+end comportamiento;
+
+--====================================================================

@@ -57,12 +57,40 @@ end controladorMotorTiempo;
 architecture estructura of controladorMotorTiempo is
 
 --**********Inicio de las señales**********
+signal BI: std_logic;
+signal numSel: std_logic_vector(3 downto 0);
+signal dirCol: std_logic_vector(1 downto 0);
+
 signal inicioMotor, apagarMotor: std_logic;
 signal finTiempo: std_logic;
-signal numSel: std_logic_vector(3 downto 0);
 --==========Fin de las señales==========
 
 --**********Inicio de los componentes**********
+component TOP_teclado_4x3 is
+    port(
+        --Entradas
+		rst_TOP,osc	: in std_logic;
+        clr_TOP     : in std_logic;
+		R_TOP	    : in std_logic_vector(4 downto 1); --[R4,R3,R2,R1]
+
+		--Salidas 
+		I_TOP : out std_logic_vector(1 downto 0); --[Deco de columnas]
+        BCD_TOP : out std_logic_vector(3 downto 0); --[DEC 7s]
+        BI_TOP  : out std_logic  --[BI del DEC 7s]
+    );
+end component TOP_teclado_4x3;
+
+component Dec2x4 is
+    port(
+        --Entradas
+        I: in std_logic_vector(1 downto 0);
+        EN: in std_logic;
+  
+        --Salidas
+        m: out std_logic_vector(3 downto 0)
+    );
+end component Dec2x4;
+
 component ControladorTiempo is
     port(
         --Entradas
@@ -85,6 +113,34 @@ end component ControladorTiempo;
 
 --**********Inicio de la estructura**********
 begin
+    --Teclado
+    teclado: TOP_teclado_4x3
+    port map(
+        --Entradas
+		rst_TOP => RST_GEN,
+        osc	=> CLK,
+        clr_TOP => '1',
+		R_TOP => RENGLONES,
+
+		--Salidas 
+		I_TOP => dirCol,
+        BCD_TOP => numSel,
+        BI_TOP => BI
+    );
+
+    decRenglones: Dec2x4
+    port map(
+        --Entradas
+        I => dirCol,
+        EN => '0',
+  
+        --Salidas
+        m => COLUMNAS
+    );
+
+    DISPLAY1 <= numSel;
+
+    --Control del tiempo
     contolTiempo: ControladorTiempo
         port map(
             --Entradas
